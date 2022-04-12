@@ -53,6 +53,7 @@ namespace ToddBot
                this.tlpVoiceItems.RowStyles.Add(new System.Windows.Forms.RowStyle());
                this.tlpVoiceItems.RowStyles.Add(new System.Windows.Forms.RowStyle());
                this.tlpVoiceItems.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+               this.tlpVoiceItems.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
                this.tlpVoiceItems.Size = new System.Drawing.Size(711, 528);
                this.tlpVoiceItems.TabIndex = 0;
                // 

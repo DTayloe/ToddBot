@@ -49,7 +49,6 @@ namespace ToddBot
                }
           }
 
-
           private void PopulateComboBox()
           {
                comboBoxVoiceFolder.Items.Clear();
@@ -94,23 +93,36 @@ namespace ToddBot
 
      public class PlayerUtilities
      {
+          private static ToddBotView toddBotView = null;
+
           public static List<VoiceSound> GetVoiceSounds(string voiceFolder)
           {
                List<VoiceSound> sounds = new List<VoiceSound>();
 
                DirectoryInfo voicePlayerDirInfo = new DirectoryInfo(voiceFolder);
-               foreach (var voiceSound in voicePlayerDirInfo.GetFiles())
+               foreach (var voiceSound in voicePlayerDirInfo.GetFiles("*.wav"))
                {
                     sounds.Add(new VoiceSound(voiceSound.FullName, voiceSound.Name));
                }
 
                return sounds;
           }
+
+          public static void PlayToddBot(string videoPath)
+          {
+               if(toddBotView == null)
+               {
+                    toddBotView = new ToddBotView();
+               }
+
+               toddBotView.Show();
+               toddBotView.PlayVideo(videoPath);
+          }
      }
 
      public class VoiceSound
      {
-          
+
           public string VoiceSoundPath { get; private set; }
           public string VoiceSoundName { get; private set; }
           private FileStream Sound { get; set; }
@@ -124,15 +136,19 @@ namespace ToddBot
                VoiceSoundName = voiceSoundName;
                VoiceSoundPath = voiceSoundPath;
                Player = new System.Media.SoundPlayer(Sound);
-
           }
 
           public void Play()
           {
-               //MediaPlayer Player = new MediaPlayer();
-               //Player.Open(new System.Uri(VoiceSoundPath));
-               //Player.Position = TimeSpan.Zero;
                Player.Play();
+
+               FileInfo voiceFile = new FileInfo(VoiceSoundPath);
+               string voiceVideoFile = voiceFile.DirectoryName + Path.DirectorySeparatorChar + voiceFile.Name.Substring(0,voiceFile.Name.Length-voiceFile.Extension.Length) + ".mp4";
+
+               if (File.Exists(voiceVideoFile))
+               {
+                    PlayerUtilities.PlayToddBot(voiceVideoFile);
+               }
           }
      }
 }
