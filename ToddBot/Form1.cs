@@ -140,14 +140,17 @@ namespace ToddBot
 
           public void Play()
           {
-               Player.Play();
 
                FileInfo voiceFile = new FileInfo(VoiceSoundPath);
-               string voiceVideoFile = voiceFile.DirectoryName + Path.DirectorySeparatorChar + voiceFile.Name.Substring(0,voiceFile.Name.Length-voiceFile.Extension.Length) + ".mp4";
+               string voiceVideoFile = voiceFile.DirectoryName + Path.DirectorySeparatorChar + voiceFile.Name.Substring(0,voiceFile.Name.Length-voiceFile.Extension.Length) + ".webm";
 
                if (File.Exists(voiceVideoFile))
                {
                     PlayerUtilities.PlayToddBot(voiceVideoFile);
+               }
+               else
+               {
+                    Player.Play();
                }
           }
      }
